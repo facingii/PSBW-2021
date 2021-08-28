@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFFundamentals", "EFFundamentals\EFFundamentals.csproj", "{EA939245-4839-41D0-B187-1C61C144F5DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA939245-4839-41D0-B187-1C61C144F5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA939245-4839-41D0-B187-1C61C144F5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA939245-4839-41D0-B187-1C61C144F5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA939245-4839-41D0-B187-1C61C144F5DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB90EF07-E80B-4C24-A029-D47047341925}
+	EndGlobalSection
+EndGlobal
