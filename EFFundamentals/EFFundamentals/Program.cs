@@ -41,17 +41,54 @@ namespace EFFundamentals
             // an entity related with that keys
             //var department = context.Departments.Find (new object [] { "1111" });
             //if (department != null)
-                //Console.WriteLine (department.DeptName);
+            //Console.WriteLine (department.DeptName);
 
             // **************************** delete *******************************
             // Other recurrent action performed with entities is delete it, to do so
             // DbSet count with Remove method, this method receive as parameter the entity that
             // want be deleted
-            var department = context.Departments.Find (new object [] { "1111" });
-            if (department != null)
-                context.Departments.Remove (department);
+            //var department = context.Departments.Find (new object [] { "1111" });
+            //if (department != null)
+            //    context.Departments.Remove (department);
+
+            // Predicate
+            var result = ValidateName (
+                (name) =>
+                {
+                    if (!name.EsVacio())
+                    {
+                        return "Name is missing";
+                    }
+
+                    return $"Your name is {name}";
+
+
+                }, "John Snow");
+
+
+
+            Console.WriteLine (result);
 
             Console.ReadKey ();
         }
+
+        static string ValidateName (Func<string, string> func, string name)
+        {
+            return func (name);
+        }
+
     }
+
+    /// <summary>
+    /// Method extensions
+    /// </summary>
+    public static class MyExtensions
+    {
+        public static bool EsVacio (this string source)
+        {
+            return source != null && source.Length > 0;
+        }
+    }
+
+
 }
