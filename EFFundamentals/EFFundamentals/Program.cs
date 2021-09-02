@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EFFundamentals.Models;
 
 namespace EFFundamentals
@@ -52,7 +53,7 @@ namespace EFFundamentals
             //    context.Departments.Remove (department);
 
             // Predicate
-            var result = ValidateName (
+            /*var result = ValidateName (
                 (name) =>
                 {
                     if (!name.EsVacio())
@@ -65,11 +66,34 @@ namespace EFFundamentals
 
                 }, "John Snow");
 
-
-
             Console.WriteLine (result);
 
+            Action<string> myAction = (name) => {
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine ($"{name} - {i}");
+                }
+            };
+
+            myAction ("Daenarys");*/
+
+            // FLOW API
+
+            // SELECT count (emp_no) AS rows FROM employees;
+            //var rows = context.Employees.Count ();
+            //Console.WriteLine (rows);
+
+            // SELECT * FROM employees WHERE last_name LIKE '%sm%';
+            // Empployees.Where
+            var employees = context.Employees.Where (emp => emp.LastName.Contains ("sm")).Select (emp => "{emp.FirstName} {emp.LastName}");
+
+            foreach (var e in employees)
+            {
+                Console.WriteLine (e);
+            }
+
             Console.ReadKey ();
+
         }
 
         static string ValidateName (Func<string, string> func, string name)
@@ -84,6 +108,11 @@ namespace EFFundamentals
     /// </summary>
     public static class MyExtensions
     {
+        /// <summary>
+        /// Devulve verdadero si la cadena no es nula o vacía, falso en caso contrario
+        /// </summary>
+        /// <param name="source">La cadena de entrada</param>
+        /// <returns>Verdadero o Falso</returns>
         public static bool EsVacio (this string source)
         {
             return source != null && source.Length > 0;
