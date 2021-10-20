@@ -41,7 +41,7 @@ namespace EmployeesMicroService.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{userName} - Error during query to get employees information");
-                throw;
+                throw; // criterio del programador o de las reglas de negocio
             }
         }
 
@@ -81,7 +81,6 @@ namespace EmployeesMicroService.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost ("api/employees")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

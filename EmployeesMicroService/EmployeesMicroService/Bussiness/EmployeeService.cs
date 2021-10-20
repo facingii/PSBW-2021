@@ -23,7 +23,8 @@ namespace EmployeesMicroService.Bussiness
             try
             {
                 _looger.LogInformation ($"Fetching information for Employee from {index} to {take}");
-                return _context.Employees.Skip (index).Take (take).Select (e => new {
+
+                return _context.Employees.Skip (index).Take (take).Select (e => new { // bussiness rule
                     EmpNo = e.EmpNo,
                     FirstName = e.FirstName,
                     LastName = e.LastName,

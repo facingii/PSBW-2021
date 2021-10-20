@@ -43,7 +43,7 @@ namespace EmployeesMicroService.Helpers
             {
                 Subject = new ClaimsIdentity (
                     new Claim [] {
-                        new Claim (ClaimTypes.Name, user.Id.ToString ())
+                        new Claim (ClaimTypes.Name, user.UserName)
                     }
                 ),
                 Expires = DateTime.Now.AddHours (1),

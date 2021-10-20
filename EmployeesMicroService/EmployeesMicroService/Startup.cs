@@ -50,11 +50,11 @@ namespace EmployeesMicroService
 
             // add Jwt authentication
             services.AddAuthentication(authOptions =>
-           {
+            {
                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-           }).AddJwtBearer(bearerOptions =>
-           {
+            }).AddJwtBearer(bearerOptions =>
+            {
                bearerOptions.RequireHttpsMetadata = false;
                bearerOptions.SaveToken = true;
                bearerOptions.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -64,7 +64,7 @@ namespace EmployeesMicroService
                    ValidateIssuer = false,
                    ValidateAudience = false
                };
-           });
+            });
 
             // add custom services
             services.AddScoped<IEmployeeService, EmployeeService>();
@@ -83,7 +83,7 @@ namespace EmployeesMicroService
 
             app.UseRouting();
             app.UseAuthentication ();
-            app.UseAuthorization();            
+            app.UseAuthorization ();            
 
             app.UseEndpoints(endpoints =>
             {
