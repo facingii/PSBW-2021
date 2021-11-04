@@ -79,8 +79,8 @@ namespace EmployeesMicroService.Bussiness
 
                 if (savedEmp != null)
                 {
-                    savedEmp.FirstName = savedEmp.FirstName.Equals (employee.FirstName) ? employee.FirstName : savedEmp.FirstName;
-                    savedEmp.LastName = savedEmp.LastName.Equals (employee.LastName) ? employee.LastName : savedEmp.LastName;
+                    savedEmp.FirstName = !savedEmp.FirstName.Equals (employee.FirstName) ? employee.FirstName : savedEmp.FirstName;
+                    savedEmp.LastName = !savedEmp.LastName.Equals (employee.LastName) ? employee.LastName : savedEmp.LastName;
                     savedEmp.Gender = employee.Gender;
                     savedEmp.BirthDate = employee.BirthDate;
                     savedEmp.HireDate = employee.HireDate;
