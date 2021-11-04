@@ -66,6 +66,16 @@ namespace EmployeesMicroService
                };
             });
 
+            services.AddCors (options =>
+            {
+                options.AddPolicy ("MY_CORS", builder =>
+                {
+                    builder.WithOrigins ("http://localhost:3000");
+                    builder.AllowAnyMethod ();
+                    builder.AllowAnyHeader ();
+                });
+            });
+
             // add custom services
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IUserService, UserService>();
@@ -81,7 +91,8 @@ namespace EmployeesMicroService
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeesMicroService v1"));
             }
 
-            app.UseRouting();
+            app.UseRouting ();
+            app.UseCors ("MY_CORS");
             app.UseAuthentication ();
             app.UseAuthorization ();            
 
