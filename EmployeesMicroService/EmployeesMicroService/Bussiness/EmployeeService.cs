@@ -4,18 +4,23 @@ using System.Collections;
 using EmployeesMicroService.Models;
 using EmployeesMicroService.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.DataProtection;
+using System.Text;
 
 namespace EmployeesMicroService.Bussiness
 {
     public class EmployeeService : IEmployeeService
     {
+        private const string PURPOSE = "EmployeesProtection";
         private readonly ILogger<EmployeeService> _looger;
         private readonly employeesContext _context;
+        private readonly IDataProtector _protector;
 
-        public EmployeeService (ILogger<EmployeeService> logger, employeesContext context)
+        public EmployeeService (ILogger<EmployeeService> logger, employeesContext context, IDataProtectionProvider provider)
         {
             _context = context;
             _looger = logger;
+            _protector = provider.CreateProtector (PURPOSE);
         }
 
         public IEnumerable GetAll (int index = 0, int take = 50)
@@ -25,7 +30,7 @@ namespace EmployeesMicroService.Bussiness
                 _looger.LogInformation ($"Fetching information for Employee from {index} to {take}");
 
                 return _context.Employees.Skip (index).Take (take).Select (e => new { // bussiness rule
-                    EmpNo = e.EmpNo,
+                    EmpNo = (_protector.Protect (e.EmpNo.ToString ())),
                     FirstName = e.FirstName,
                     LastName = e.LastName,
                     Gender = e.Gender,
@@ -40,8 +45,11 @@ namespace EmployeesMicroService.Bussiness
             }
         }
 
-        public Employee GetEmployee (int empNo)
+        public Employee GetEmployee (string id)
         {
+            var foo = _protector.Unprotect (id);
+            var empNo = int.Parse (foo);
+
             try
             {
                 _looger.LogInformation ($"Getting information for employee with number {empNo}");
@@ -70,8 +78,11 @@ namespace EmployeesMicroService.Bussiness
             }
         }
 
-        public bool UpdateEmployee (int empNo, Employee employee)
+        public bool UpdateEmployee (string id, Employee employee)
         {
+            var foo = _protector.Unprotect(id);
+            var empNo = int.Parse(foo);
+
             try
             {
                 _looger.LogInformation ($"Update record for the employee number {empNo}");

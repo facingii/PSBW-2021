@@ -7,9 +7,9 @@ namespace EmployeesMicroService.Services
     public interface IEmployeeService
     {
         IEnumerable GetAll (int index, int take);
-        Employee GetEmployee (int empNo);
+        Employee GetEmployee (string id);
         bool SaveEmployee (Employee employee);
-        bool UpdateEmployee (int empNo, Employee employee);
+        bool UpdateEmployee (string id, Employee employee);
         bool DeleteEmployee (int empNo);
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 
 import {
@@ -12,7 +12,7 @@ import {
     Alert
 } from 'reactstrap';
 
-class AddEmployee extends React.Component {
+class AddEmployee extends Component {
 
     constructor (props) {
         super (props);
@@ -101,7 +101,8 @@ class AddEmployee extends React.Component {
                 <h4 className="PageHeading">Enter employee infomation</h4>
                 <Alert
                     isOpen={this.state.isSubmitted}
-                    color={!this.state.error ? "success" : "error"}
+                    color={!this.state.error ? "success" : "warning"}
+                    toggle={() => this.setState ({isSubmitted: false})}
                 >
                     {!this.state.error ? "Information was saved!" : "An error occurs while trying to save information"}
                 </Alert>

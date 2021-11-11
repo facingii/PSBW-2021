@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EmployeesMicroService.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _service;
@@ -45,19 +45,19 @@ namespace EmployeesMicroService.Controllers
             }
         }
 
-        [HttpGet ("api/employees/{EmpNo}")]
+        [HttpGet ("api/employees/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Employee))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetEmployee (int empNo)
+        public IActionResult GetEmployee (string id)
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
 
-            _logger.LogInformation($"{userName} - Calling method GetEmployee with param {empNo}", null);
+            _logger.LogInformation($"{userName} - Calling method GetEmployee with protected param {id}", null);
 
             try
             {
-                var employee = _service.GetEmployee (empNo);
+                var employee = _service.GetEmployee (id);
                 if (employee != null)
                 {
                     return Ok (
@@ -76,7 +76,7 @@ namespace EmployeesMicroService.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError (ex, $"{userName} - Error during query to get employee information", empNo);
+                _logger.LogError (ex, $"{userName} - Error during query to get employee information", id);
                 throw;
             }
         }
@@ -106,19 +106,19 @@ namespace EmployeesMicroService.Controllers
             }
         }
 
-        [HttpPut ("api/employees/{empNo}")]
+        [HttpPut ("api/employees/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult SaveEmployee ([FromBody] Employee employee, int empNo)
+        public IActionResult SaveEmployee ([FromBody] Employee employee, string id)
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.FindFirst(ClaimTypes.Name)?.Value;
 
             try
             {
-                _logger.LogInformation($"{userName} - Updating employee number {empNo}");
-                var updated = _service.UpdateEmployee (empNo, employee);
+                _logger.LogInformation($"{userName} - Updating employee cifer number {id}");
+                var updated = _service.UpdateEmployee (id, employee);
 
                 if (updated)
                     return Ok ();

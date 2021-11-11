@@ -83,7 +83,6 @@ class ListEmployees extends Component {
         const dateFormatter = (date) => {
             var formatter = new Intl.DateTimeFormat('en-mx', 'dd-MM-yyyy');
             return formatter.format(new Date (date));
-
         }
 
         return (

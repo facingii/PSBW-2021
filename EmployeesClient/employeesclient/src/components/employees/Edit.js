@@ -65,7 +65,6 @@ class EditEmployee extends Component {
                 }
             },
             (error) => {
-                debugger;
                 if (error.response.status === 401) {
                     localStorage.removeItem("ACCESS_TOKEN");
                     this.setState (
@@ -150,8 +149,8 @@ class EditEmployee extends Component {
             );
         }
 
-        if (this.state.isCanceled) {
-            debugger    
+        if (this.state.isCanceled) 
+        {
             return (
                 <Redirect
                     to = 
@@ -172,19 +171,13 @@ class EditEmployee extends Component {
                 <h4 className="PageHeading">Enter employee infomation</h4>
                 <Alert 
                     isOpen={this.state.isSubmitted} 
-                    color={!this.state.error ? "success" : "danger"}
+                    color={!this.state.error ? "success" : "warning"}
                     toggle={() => this.setState ({ isSubmitted: false })}
                 >
                     {!this.state.error ? "Information was saved!" : "An error occurs while trying to update information"}
                 </Alert>
                 <Form className="form">
                     <Col>
-                        <FormGroup row>
-                            <Label for="name" sm={2}>No. Employee</Label>
-                            <Col sm={2}>
-                                <Input disabled={true} type="text" name="empNo" onChange={this.handleChange} value={this.state.empNo} />
-                            </Col>
-                        </FormGroup>
                         <FormGroup row>
                             <Label for="name" sm={2}>First Name</Label>
                             <Col sm={2}>

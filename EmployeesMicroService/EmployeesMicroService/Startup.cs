@@ -1,8 +1,13 @@
-﻿using EmployeesMicroService.Bussiness;
+﻿using System;
+using System.Collections.Generic;
+using EmployeesMicroService.Bussiness;
 using EmployeesMicroService.Helpers;
 using EmployeesMicroService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +17,11 @@ using Microsoft.OpenApi.Models;
 
 namespace EmployeesMicroService
 {
+    public class Foo
+    {
+        public List<string> host;
+    }
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -66,15 +76,31 @@ namespace EmployeesMicroService
                };
             });
 
-            services.AddCors (options =>
+            // add CORS 
+            var origins = Configuration.GetSection ("Origins");
+            var hosts = origins.Get<string[]>();
+
+            services.AddCors(options =>
             {
-                options.AddPolicy ("MY_CORS", builder =>
-                {
-                    builder.WithOrigins ("http://localhost:3000");
-                    builder.AllowAnyMethod ();
-                    builder.AllowAnyHeader ();
-                });
+               options.AddPolicy ("MY_CORS", builder =>
+               {
+                   builder.WithOrigins (hosts);
+                   builder.AllowAnyMethod ();
+                   builder.AllowAnyHeader ();
+               });
             });
+
+            // add Data protection
+            services.AddDataProtection ()
+                .SetApplicationName ("EmployeesApi")
+                .SetDefaultKeyLifetime (TimeSpan.FromDays (14))
+                .UseCryptographicAlgorithms (
+                    new AuthenticatedEncryptorConfiguration
+                    {
+                        EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+                        ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+                    }
+                );
 
             // add custom services
             services.AddScoped<IEmployeeService, EmployeeService>();
